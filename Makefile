@@ -1,1 +1,2 @@
-
+run:
+	@cargo run -- $(ARGS)

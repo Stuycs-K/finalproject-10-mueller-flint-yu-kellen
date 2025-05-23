@@ -12,10 +12,7 @@ Hexadecimal editor
 ### Instructions:
 
 To run:
-`cargo run --release -- <filename>`
-or
-`cargo build --release`
-`./target/release/hexitor <filename>`
+`make run ARGS=<filename>`
 
 To use:
 God knows...
