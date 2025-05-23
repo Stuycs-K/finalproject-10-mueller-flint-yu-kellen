@@ -2,27 +2,21 @@
 
 ## Group Members:
 
-names here.(CHANGE THIS!!!!!)
+Flint Mueller, Kellen Yu
        
 # Intentions:
 
-A statement of the problem you are solving and/or a high level description of the project. (CHANGE THIS!!!!!)
+We are making a modal editor for the hex of a file.
     
 # Intended usage:
 
-A description as to how the project will be used (describe the user interface). (CHANGE THIS!!!!!)
+It's a terminal based editor. You run it with the name of a file and then you can edit the hex of the file.
   
 # Technical Details:
 
-(CHANGE THIS!!!!!)
-
-A description of your technical design. This should include: 
-   
-How you will be using the topics covered in class in the project.
-     
-How you are breaking down the project and who is responsible for which parts.
-  
+We will be writing it in rust. Kellen will do the editor features to edit the hex.
+Flint will do the converting of the file to hex and back, as well as any other boilerplate.
     
 # Intended pacing:
 
-A timeline with expected completion dates of parts of the project. (CHANGE THIS!!!!!)
+KELLEN DO THIS PART
