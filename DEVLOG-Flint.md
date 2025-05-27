@@ -4,6 +4,11 @@ This document must be updated daily every time you finish a work session.
 
 ## FLint Mueller
 
-### 2024-05-23 - Update
+### 2025-05-23 - Update
 I updated all the base files to describe the project
 Also initialized rust project
+
+### 2025-05-27 - Base code and research
+I researched how to use the termion rust library.
+Most of the code should be able to be handled by the library.
+Then I added some boilerplate code and gave the repo some structure.
