@@ -12,3 +12,7 @@ Also initialized rust project
 I researched how to use the termion rust library.
 Most of the code should be able to be handled by the library.
 Then I added some boilerplate code and gave the repo some structure.
+
+### 2025-05-28 - Fill in some io fucntions
+I filled in the handle_input and display functions.
+They don't quite work but the logic is there.
