@@ -17,9 +17,10 @@ fn main() {
         .open(file)
         .expect("Failed to open file");
     let mut text = load(&file);
+    let mut cursor_pos = (1, 1);
 
-    while handle_input(&mut text) {
-        display(&text);
+    while handle_input(&mut text, &mut cursor_pos) {
+        display(&text, &cursor_pos);
     }
 
     save(
