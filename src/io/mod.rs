@@ -9,6 +9,7 @@ pub fn display(text: &str, cursor_pos: &(u16, u16)) {
 }
 
 pub fn handle_input(text: &mut String, cursor_pos: &mut (u16, u16)) -> bool { 
+    let _stdout = stdout().into_raw_mode().unwrap();
     let stdin = stdin();
     for c in stdin.keys() {
         match c.unwrap() {
