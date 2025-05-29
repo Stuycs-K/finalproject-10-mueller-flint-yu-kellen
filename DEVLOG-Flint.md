@@ -16,3 +16,7 @@ Then I added some boilerplate code and gave the repo some structure.
 ### 2025-05-28 - Fill in some io fucntions
 I filled in the handle_input and display functions.
 They don't quite work but the logic is there.
+
+### 2025-05-29 - Got raw mode to work
+I debugged the raw mode and got it to work.
+Need to get the input to register
