@@ -9,5 +9,13 @@ pub fn load(file: &mut File) -> String {
     let mut out = String::new();
     let mut data: Vec<u8> = Vec::<u8>::new();
     file.read_to_end(&mut data);
+    
+    let mut i = 0;
+    while i < data.len() {
+        out.push_str(&format!("{:x}", data[i]));
+        i += 1;
+    }
+    println!("{}", out);
+    
     return out;
 }
