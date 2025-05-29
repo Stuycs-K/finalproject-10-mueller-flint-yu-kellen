@@ -1,11 +1,10 @@
 use std::fs::File;
 use std::io::Read;
-
+use std::io::Write;
 
 pub fn save(file: &mut File, text: &str) {
     let mut data: Vec<u8> = text.split_whitespace().map(|s| u8::from_str_radix(s, 16).unwrap()).collect::<Vec<u8>>();
-
-
+    file.write(&mut data);
 }
 
 // Load a file and convert to hex file

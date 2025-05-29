@@ -24,7 +24,7 @@ fn main() {
     }
 
     save(
-        file,
+        &mut file,
         &text,
     );
 }
