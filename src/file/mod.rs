@@ -26,12 +26,6 @@ pub fn load(file: &mut File) -> String {
         }
         i += 1;
     }
-<<<<<<< HEAD
-    println!("{}", out);
-    
-    out
-=======
 
-    return out;
->>>>>>> 6330372617cf3d78e038a3008f20a35fc46a3ec1
+    out
 }
