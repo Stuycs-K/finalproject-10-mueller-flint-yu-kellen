@@ -22,24 +22,24 @@ pub fn handle_input(text: &mut String, cursor_pos: &mut (u16, u16)) -> bool {
                 text.push(c);
                 cursor_pos.0 += 1;
             }
-            termion::event::Key::Left => {
+            termion::event::Key::Char(h) => {
                 if cursor_pos.0 > 1 {
                     cursor_pos.0 -= 1;
                 }
             }
-            termion::event::Key::Right => {
+            termion::event::Key::Char(l) => {
                 if cursor_pos.0 < text.len() as u16 {
                     cursor_pos.0 += 1;
                 }
             }
-            termion::event::Key::Up => {
+            termion::event::Key::Char(k) => {
                 if cursor_pos.1 > 1 {
                     cursor_pos.1 -= 1;
                     let prev_line_start = text.rfind('\n').unwrap_or(0);
                     cursor_pos.0 = (prev_line_start + 1) as u16;
                 }
             }
-            termion::event::Key::Down => {
+            termion::event::Key::Char(h) => {
                 if cursor_pos.1 < text.lines().count() as u16 {
                     cursor_pos.1 += 1;
                     let next_line_start = text.lines().nth(cursor_pos.1 as usize - 1).map_or(0, |line| line.len());

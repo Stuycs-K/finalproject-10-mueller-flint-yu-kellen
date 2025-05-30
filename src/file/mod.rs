@@ -2,6 +2,7 @@ use std::fs::File;
 use std::io::Read;
 use std::io::Write;
 
+// Convert a hex string to a byte array and save it to a file
 pub fn save(file: &mut File, text: &str) {
     let mut data: Vec<u8> = text.split_whitespace().map(|s| u8::from_str_radix(s, 16).unwrap()).collect::<Vec<u8>>();
     file.write(&mut data);
@@ -25,7 +26,6 @@ pub fn load(file: &mut File) -> String {
         }
         i += 1;
     }
-    println!("{}", out);
-    
+
     return out;
 }
