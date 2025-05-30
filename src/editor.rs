@@ -1,6 +1,10 @@
 use std::io::{Write, stdin, stdout};
-
 use termion::{input::TermRead, raw::IntoRawMode};
+
+enum Mode {
+    READ,
+    WRITE,
+}
 
 pub struct Editor {
     pub text: String,
@@ -11,6 +15,7 @@ impl Editor {
     pub fn new(text: String) -> Self {
         Editor {
             text,
+            state: Mode::READ,
             cursor_pos: (1, 1),
         }
     }
@@ -28,10 +33,25 @@ impl Editor {
         stdout.flush().unwrap();
     }
 
+    fn read_handle(&mut self, c: termion::event::Key) -> bool {
+        match c{
+
+        }
+    }
+
+    fn write_handle(&mut self, c: termion::event::Key) -> bool {
+    }
+
+
     pub fn handle_input(&mut self) -> bool {
         let _stdout = stdout().into_raw_mode().unwrap();
         let stdin = stdin();
         for c in stdin.keys() {
+            match state {
+                Mode::READ=>read_handle(c.unwrap()),
+                Mode::WRITE=>write_handle(c.unwrap())
+            }
+        }
             match c.unwrap() {
                 termion::event::Key::Char('\n') => {
                     self.text.push('\n');
@@ -42,24 +62,24 @@ impl Editor {
                     self.text.push(c);
                     self.cursor_pos.0 += 1;
                 }
-                termion::event::Key::Left => {
+                termion::event::Key::Char(h)=> {
                     if self.cursor_pos.0 > 1 {
                         self.cursor_pos.0 -= 1;
                     }
                 }
-                termion::event::Key::Right => {
+                termion::event::Key::Char(l)=> {
                     if self.cursor_pos.0 < self.text.len() as u16 {
                         self.cursor_pos.0 += 1;
                     }
                 }
-                termion::event::Key::Up => {
+                termion::event::Key::Char(k) => {
                     if self.cursor_pos.1 > 1 {
                         self.cursor_pos.1 -= 1;
                         let prev_line_start = self.text.rfind('\n').unwrap_or(0);
                         self.cursor_pos.0 = (prev_line_start + 1) as u16;
                     }
                 }
-                termion::event::Key::Down => {
+                termion::event::Key::Char(j) => {
                     if self.cursor_pos.1 < self.text.lines().count() as u16 {
                         self.cursor_pos.1 += 1;
                         let next_line_start = self
