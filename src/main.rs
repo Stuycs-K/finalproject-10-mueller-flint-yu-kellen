@@ -19,10 +19,7 @@ fn main() {
 
     let text = load(&mut file);
     let mut editor = Editor::new(text);
-
-    while editor.handle_input() {
-        editor.display();
-    }
+    editor.run();
 
     save(
         &mut file,

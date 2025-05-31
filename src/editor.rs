@@ -28,7 +28,12 @@ impl Editor {
         }
     }
 
-    pub fn display(&mut self) {
+    pub fn run(&mut self) {
+        self.display();
+        while self.handle_input() {}
+    }
+
+    fn display(&mut self) {
         write!(
             self.stdout,
             "{}{}{}",
@@ -89,7 +94,7 @@ impl Editor {
                 self.cursor_pos.0 = 1;
                 self.cursor_pos.1 += 1;
             }
-            Key::Char(c @ ('0'..='9' | 'a'..='z' | 'A'..='z' | ' ' | '\t')) => {
+            Key::Char(c @ ('0'..='9' | 'a'..='f' | 'A'..='F' | ' ' | '\t')) => {
                 self.text.push(c);
                 self.cursor_pos.0 += 1;
             }
@@ -99,7 +104,7 @@ impl Editor {
         true
     }
 
-    pub fn handle_input(&mut self) -> bool {
+    fn handle_input(&mut self) -> bool {
         for c in self.stdin.by_ref().keys().collect::<Vec<_>>() {
             if !match self.state {
                 Mode::Read => self.read_handle(c.unwrap()),
@@ -107,6 +112,7 @@ impl Editor {
             } {
                 return false;
             }
+            self.display();
         }
         true
     }
