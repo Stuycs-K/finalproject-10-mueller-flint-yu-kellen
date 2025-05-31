@@ -1,5 +1,5 @@
 use std::io::{Write, stdin, stdout};
-use termion::{input::TermRead, raw::IntoRawMode};
+use termion::{event::Key, input::TermRead, raw::IntoRawMode};
 
 enum Mode {
     Read,
@@ -34,26 +34,26 @@ impl Editor {
         stdout.flush().unwrap();
     }
 
-    fn read_handle(&mut self, c: termion::event::Key) -> bool {
+    fn read_handle(&mut self, c: Key) -> bool {
         match c {
-            termion::event::Key::Char('h') => {
+            Key::Char('h') => {
                 if self.cursor_pos.0 > 1 {
                     self.cursor_pos.0 -= 1;
                 }
             }
-            termion::event::Key::Char('l') => {
+            Key::Char('l') => {
                 if self.cursor_pos.0 < self.text.len() as u16 {
                     self.cursor_pos.0 += 1;
                 }
             }
-            termion::event::Key::Char('k') => {
+            Key::Char('k') => {
                 if self.cursor_pos.1 > 1 {
                     self.cursor_pos.1 -= 1;
                     let prev_line_start = self.text.rfind('\n').unwrap_or(0);
                     self.cursor_pos.0 = (prev_line_start + 1) as u16;
                 }
             }
-            termion::event::Key::Char('j') => {
+            Key::Char('j') => {
                 if self.cursor_pos.1 < self.text.lines().count() as u16 {
                     self.cursor_pos.1 += 1;
                     let next_line_start = self
@@ -64,30 +64,30 @@ impl Editor {
                     self.cursor_pos.0 = (next_line_start + 1) as u16;
                 }
             }
-            termion::event::Key::Char('i') => {
+            Key::Char('i') => {
                 self.state = Mode::Write;
             }
-            termion::event::Key::Char('q') => return false,
+            Key::Ctrl('c') | Key::Char('q') => return false,
             _ => {}
         }
         true
     }
 
-    fn write_handle(&mut self, c: termion::event::Key) -> bool {
+    fn write_handle(&mut self, c: Key) -> bool {
         match c {
-            termion::event::Key::Esc => {
+            Key::Esc => {
                 self.state = Mode::Read;
             }
-            termion::event::Key::Char('\n') => {
+            Key::Char('\n') => {
                 self.text.push('\n');
                 self.cursor_pos.0 = 1;
                 self.cursor_pos.1 += 1;
             }
-            termion::event::Key::Char(c) => {
+            Key::Char(c) => {
                 self.text.push(c);
                 self.cursor_pos.0 += 1;
             }
-            termion::event::Key::Ctrl('c') => return false,
+            Key::Ctrl('c') => return false,
             _ => {}
         }
         true
@@ -97,7 +97,7 @@ impl Editor {
         let _stdout = stdout().into_raw_mode().unwrap();
         let stdin = stdin();
         for c in stdin.keys() {
-            if match self.state {
+            if !match self.state {
                 Mode::Read => self.read_handle(c.unwrap()),
                 Mode::Write => self.write_handle(c.unwrap()),
             } {
