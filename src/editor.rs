@@ -91,6 +91,7 @@ impl Editor {
             }
             Key::Char('\n') => {
                 self.text.push('\n');
+                self.text.push('\r');
                 self.cursor_pos.0 = 1;
                 self.cursor_pos.1 += 1;
             }
