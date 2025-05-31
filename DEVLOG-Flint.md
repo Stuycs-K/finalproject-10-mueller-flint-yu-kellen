@@ -24,3 +24,8 @@ Need to get the input to register
 ### 2025-05-30 - Reogranize project structure
 Put some functions in their own class.
 Updated main file.
+
+### 2025-05-31 - Closer to working project
+Fixed compilation and got input to register.
+Added stdin and stdout to editor class
+Moved all the editor logic out of main.rs
