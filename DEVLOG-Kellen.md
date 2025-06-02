@@ -14,6 +14,14 @@ Wrote function that converts a file's raw bytes into a hex string
 Wrote function that converts a hex string into a byte vector,
 Tested both functions from yesterday and today and verified that it works
 
-### 2024-05-30 - Worked on editor class
+### 2025-05-30 - Worked on editor class
 Started state machine for various modes (READ/WRITE), started
 functions to handle characters passed depending on the mode
+
+### 2025-05-31 - Tried to figure out iterators
+Rust is a very new language for me, and I didnt know what 
+iterators were. They are pretty cool
+
+### 2025-06-01 - Used iterators to write save function
+Splits string into hex bytes then turns it into binary 
+and saves it to a file. Save function works
