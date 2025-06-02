@@ -16,7 +16,3 @@ It's a terminal based editor. You run it with the name of a file and then you ca
 
 We will be writing it in rust. Kellen will do the editor features to edit the hex.
 Flint will do the converting of the file to hex and back, as well as any other boilerplate.
-    
-# Intended pacing:
-
-KELLEN DO THIS PART

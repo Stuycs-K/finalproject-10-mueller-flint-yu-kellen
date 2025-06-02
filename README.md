@@ -19,4 +19,4 @@ God knows...
 
 ### Resources/ References:
 
-TODO: PUT STUFF HERE
+- [Tutorial for getting raw mode terminal](https://ticki.github.io/blog/making-terminal-applications-in-rust-with-termion/)
