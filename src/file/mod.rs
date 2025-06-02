@@ -3,11 +3,16 @@ use std::io::Read;
 use std::io::Write;
 
 // Convert a hex string to a byte array and save it to a file
-pub fn save(file: &mut File, text: &str) {
-    let data: Vec<u8> = text
+pub fn save(file: &mut File, text: &String) {
+    let mut data = text
         .split_whitespace()
-        .map(|s| u8::from_str_radix(s, 16).unwrap())
+        .collect::<String>()
+        .chars()
+        .collect::<Vec<_>>()
+        .chunks(2)
+        .map(|chunk| u8::from_str_radix(&chunk.iter().collect::<String>(), 16).unwrap_or(0))
         .collect::<Vec<u8>>();
+
     let _ = file.write(&data);
 }
 

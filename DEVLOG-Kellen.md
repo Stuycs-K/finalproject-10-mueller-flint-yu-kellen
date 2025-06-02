@@ -14,6 +14,10 @@ Wrote function that converts a file's raw bytes into a hex string
 Wrote function that converts a hex string into a byte vector,
 Tested both functions from yesterday and today and verified that it works
 
-### 2024-05-30 - Worked on editor class
+### 2025-05-30 - Worked on editor class
 Started state machine for various modes (READ/WRITE), started
 functions to handle characters passed depending on the mode
+
+### 2025-05-31 - 
+
+### 2025-06-01
