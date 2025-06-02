@@ -18,6 +18,10 @@ Tested both functions from yesterday and today and verified that it works
 Started state machine for various modes (READ/WRITE), started
 functions to handle characters passed depending on the mode
 
-### 2025-05-31 - 
+### 2025-05-31 - Tried to figure out iterators
+Rust is a very new language for me, and I didnt know what 
+iterators were. They are pretty cool
 
-### 2025-06-01
+### 2025-06-01 - Used iterators to write save function
+Splits string into hex bytes then turns it into binary 
+and saves it to a file. Save function works
