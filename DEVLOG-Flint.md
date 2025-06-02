@@ -29,3 +29,7 @@ Updated main file.
 Fixed compilation and got input to register.
 Added stdin and stdout to editor class
 Moved all the editor logic out of main.rs
+
+### 2025-06-02 - Help Kellen and Update docs
+I helped Kellen with his code and got the hex conversion to work.
+I also updated some of the docs.
