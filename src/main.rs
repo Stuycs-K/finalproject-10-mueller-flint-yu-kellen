@@ -21,8 +21,7 @@ fn main() {
     let mut editor = Editor::new(text);
     editor.run();
 
-    save(
-        &mut file,
-        &editor.text
-    );
+    save(&mut file, &editor.text.join(""));
+
+    println!("{}{}", termion::cursor::Goto(1, 1), termion::clear::All);
 }

@@ -3,8 +3,8 @@ use std::io::Read;
 use std::io::Write;
 
 // Convert a hex string to a byte array and save it to a file
-pub fn save(file: &mut File, text: &String) {
-    let mut data = text
+pub fn save(file: &mut File, text: &str) {
+    let data = text
         .split_whitespace()
         .collect::<String>()
         .chars()
@@ -34,6 +34,8 @@ pub fn load(file: &mut File) -> String {
         }
         i += 1;
     }
+
+    out.push(' ');
 
     out
 }

@@ -10,7 +10,7 @@ enum Mode {
 }
 
 pub struct Editor {
-    pub text: String,
+    pub text: Vec<String>,
     cursor_pos: (u16, u16),
     state: Mode,
     stdin: AsyncReader,
@@ -20,9 +20,9 @@ pub struct Editor {
 impl Editor {
     pub fn new(text: String) -> Self {
         Editor {
-            text,
+            text: vec![text],
             state: Mode::Read,
-            cursor_pos: (1, 1),
+            cursor_pos: (0, 0),
             stdin: termion::async_stdin(),
             stdout: stdout().into_raw_mode().unwrap(),
         }
@@ -34,12 +34,23 @@ impl Editor {
     }
 
     fn display(&mut self) {
+        let term_width = termion::terminal_size().unwrap().0;
+        let mut rows_before = 0;
+        for line in self.text.iter().take(self.cursor_pos.1 as usize) {
+            rows_before += line.len() as u16 / term_width;
+            if line.len() as u16 % term_width - 1 != 0 {
+                rows_before += 1;
+            }
+        }
+        let cursor_row = rows_before + self.cursor_pos.0 / term_width;
+        let cursor_col = self.cursor_pos.0 % term_width;
         write!(
             self.stdout,
-            "{}{}{}",
+            "{}{}{}{}",
+            termion::cursor::Goto(1, 1),
             termion::clear::All,
-            self.text,
-            termion::cursor::Goto(self.cursor_pos.0, self.cursor_pos.1)
+            self.text.join("\n\r"),
+            termion::cursor::Goto(cursor_col + 1, cursor_row + 1),
         )
         .unwrap();
         self.stdout.flush().unwrap();
@@ -48,31 +59,31 @@ impl Editor {
     fn read_handle(&mut self, c: Key) -> bool {
         match c {
             Key::Char('h') => {
-                if self.cursor_pos.0 > 1 {
+                if self.cursor_pos.0 > 0 {
                     self.cursor_pos.0 -= 1;
                 }
             }
             Key::Char('l') => {
-                if self.cursor_pos.0 < self.text.len() as u16 {
+                if self.cursor_pos.0 < self.text[self.cursor_pos.1 as usize].len() as u16 {
                     self.cursor_pos.0 += 1;
                 }
             }
             Key::Char('k') => {
-                if self.cursor_pos.1 > 1 {
+                if self.cursor_pos.1 > 0 {
                     self.cursor_pos.1 -= 1;
-                    let prev_line_start = self.text.rfind('\n').unwrap_or(0);
-                    self.cursor_pos.0 = (prev_line_start + 1) as u16;
+                    self.cursor_pos.0 = self
+                        .cursor_pos
+                        .0
+                        .min(self.text[self.cursor_pos.1 as usize].len() as u16 - 1);
                 }
             }
             Key::Char('j') => {
-                if self.cursor_pos.1 < self.text.lines().count() as u16 {
+                if self.cursor_pos.1 + 1 < self.text.len() as u16 {
                     self.cursor_pos.1 += 1;
-                    let next_line_start = self
-                        .text
-                        .lines()
-                        .nth(self.cursor_pos.1 as usize - 1)
-                        .map_or(0, |line| line.len());
-                    self.cursor_pos.0 = (next_line_start + 1) as u16;
+                    self.cursor_pos.0 = self
+                        .cursor_pos
+                        .0
+                        .min(self.text[self.cursor_pos.1 as usize].len() as u16 - 1);
                 }
             }
             Key::Char('i') => {
@@ -90,13 +101,13 @@ impl Editor {
                 self.state = Mode::Read;
             }
             Key::Char('\n') => {
-                self.text.push('\n');
-                self.text.push('\r');
-                self.cursor_pos.0 = 1;
+                self.text
+                    .insert(self.cursor_pos.1 as usize + 1, String::from(" "));
                 self.cursor_pos.1 += 1;
+                self.cursor_pos.0 = 1;
             }
-            Key::Char(c @ ('0'..='9' | 'a'..='f' | 'A'..='F' | ' ' | '\t')) => {
-                self.text.push(c);
+            Key::Char(c @ ('0'..='9' | 'a'..='f' | 'A'..='F' | ' ')) => {
+                self.text[self.cursor_pos.1 as usize].insert(self.cursor_pos.0 as usize, c);
                 self.cursor_pos.0 += 1;
             }
             Key::Ctrl('c') => return false,
