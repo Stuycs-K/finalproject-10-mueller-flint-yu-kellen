@@ -22,6 +22,9 @@ functions to handle characters passed depending on the mode
 Rust is a very new language for me, and I didnt know what 
 iterators were. They are pretty cool
 
-### 2025-06-01 - Used iterators to write save function
+### 2025-06-02 - Used iterators to write save function
 Splits string into hex bytes then turns it into binary 
 and saves it to a file. Save function works
+
+### 2025-06-03 - Added status bar to display current mode
+Added status bar, fixed some bugs in formatting.
