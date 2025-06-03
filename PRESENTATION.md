@@ -11,6 +11,9 @@ Typically terminal input is first processed by the OS (Things like CTRL-C, arrow
 ### Termion
 We use a rust package called termion, which simplifies handling raw-mode input and writing to the terminal.
 
+## Displaying data as hex
+
+
 ## How to use
 ### Prerequisites
 Make sure to install the latest version of cargo: [download link](https://www.rust-lang.org/tools/install). You can install cargo locally without needing sudo permissions.
