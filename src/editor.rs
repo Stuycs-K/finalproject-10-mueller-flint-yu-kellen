@@ -59,11 +59,12 @@ impl Editor {
         let cursor_col = self.cursor_pos.0 % term_width;
         write!(
             self.stdout,
-            "{}{}{}{}{}{}",
+            "{}{}{}{}{}{}{}",
             termion::cursor::Goto(1, 1),
             termion::clear::All,
             self.text.join("\n\r"),
             termion::cursor::Goto(0, term_height),
+            termion::clear::CurrentLine,
             self.state,
             termion::cursor::Goto(cursor_col + 1, cursor_row + 1),
         )
