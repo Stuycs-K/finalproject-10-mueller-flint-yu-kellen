@@ -18,9 +18,9 @@ pub struct Editor {
 }
 
 impl Editor {
-    pub fn new(text: String) -> Self {
+    pub fn new(text: Vec<String>) -> Self {
         Editor {
-            text: vec![text],
+            text,
             state: Mode::Read,
             cursor_pos: (0, 0),
             stdin: termion::async_stdin(),
@@ -85,6 +85,12 @@ impl Editor {
                         .0
                         .min((self.text[self.cursor_pos.1 as usize].len() as u16).max(1) - 1);
                 }
+            }
+            Key::Char('0') => {
+                self.cursor_pos.0 = 0;
+            }
+            Key::Char('$') => {
+                self.cursor_pos.0 = self.text[self.cursor_pos.1 as usize].len() as u16 - 1;
             }
             Key::Char('i') => {
                 self.state = Mode::Write;

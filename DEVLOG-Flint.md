@@ -33,3 +33,6 @@ Moved all the editor logic out of main.rs
 ### 2025-06-02 - Help Kellen and Update docs
 I helped Kellen with his code and got the hex conversion to work.
 I also updated some of the docs.
+
+### 2025-06-02 - Fix bugs
+I fixed the rest of the move bugs and added in deleting and new lines

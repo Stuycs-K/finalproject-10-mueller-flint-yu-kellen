@@ -17,25 +17,27 @@ pub fn save(file: &mut File, text: &str) {
 }
 
 // Load a file and convert to hex file
-pub fn load(file: &mut File) -> String {
-    let mut out = String::new();
+pub fn load(file: &mut File) -> Vec<String> {
+    let term_width = termion::terminal_size().unwrap().0;
+    let mut out = vec![String::new()];
     let mut data: Vec<u8> = Vec::<u8>::new();
     file.read_to_end(&mut data).unwrap();
 
     let mut i = 0;
+    let mut j = 0;
     while i < data.len() {
         let mut s = format!("{:x}", data[i]);
         if s.len() < 2 {
             s.insert(0, '0');
         }
-        out.push_str(&s);
-        if i < data.len() - 1 {
-            out.push(' ');
+        out[j].push_str(&s);
+        out[j].push(' ');
+        if out[j].len() >= term_width as usize - 3 {
+            j += 1;
+            out.push(String::new());
         }
         i += 1;
     }
-
-    out.push(' ');
 
     out
 }
