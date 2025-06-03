@@ -38,7 +38,7 @@ impl Editor {
         let mut rows_before = 0;
         for line in self.text.iter().take(self.cursor_pos.1 as usize) {
             rows_before += line.len() as u16 / term_width;
-            if line.len() as u16 % term_width - 1 != 0 {
+            if line.len() as u16 % term_width != 0 {
                 rows_before += 1;
             }
         }
@@ -101,10 +101,12 @@ impl Editor {
                 self.state = Mode::Read;
             }
             Key::Char('\n') => {
-                self.text
-                    .insert(self.cursor_pos.1 as usize + 1, String::from(" "));
+                let new =
+                    self.text[self.cursor_pos.1 as usize].split_off(self.cursor_pos.0 as usize);
+                self.text[self.cursor_pos.1 as usize].push(' ');
+                self.text.insert(self.cursor_pos.1 as usize + 1, new);
                 self.cursor_pos.1 += 1;
-                self.cursor_pos.0 = 1;
+                self.cursor_pos.0 = 0;
             }
             Key::Char(c @ ('0'..='9' | 'a'..='f' | 'A'..='F' | ' ')) => {
                 self.text[self.cursor_pos.1 as usize].insert(self.cursor_pos.0 as usize, c);

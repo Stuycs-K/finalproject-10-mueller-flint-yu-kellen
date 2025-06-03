@@ -23,5 +23,5 @@ fn main() {
 
     save(&mut file, &editor.text.join(""));
 
-    println!("{}{}", termion::cursor::Goto(1, 1), termion::clear::All);
+    print!("{}{}", termion::cursor::Goto(1, 1), termion::clear::All);
 }
