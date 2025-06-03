@@ -86,6 +86,12 @@ impl Editor {
                         .min((self.text[self.cursor_pos.1 as usize].len() as u16).max(1) - 1);
                 }
             }
+            Key::Char('0') => {
+                self.cursor_pos.0 = 0;
+            }
+            Key::Char('$') => {
+                self.cursor_pos.0 = self.text[self.cursor_pos.1 as usize].len() as u16 - 1;
+            }
             Key::Char('i') => {
                 self.state = Mode::Write;
             }

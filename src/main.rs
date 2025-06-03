@@ -1,7 +1,6 @@
 mod editor;
 mod file;
 
-use std::fs::File;
 use std::fs::OpenOptions;
 
 use crate::editor::*;
