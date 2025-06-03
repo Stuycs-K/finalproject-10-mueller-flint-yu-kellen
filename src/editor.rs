@@ -1,4 +1,5 @@
 use std::io::{Read, Write, stdout};
+use std::fmt;
 use termion::AsyncReader;
 use termion::event::Key;
 use termion::input::TermRead;
@@ -8,6 +9,18 @@ enum Mode {
     Read,
     Write,
 }
+
+impl fmt::Display for Mode {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result{
+        write!(f, "{}",
+            match self {
+                Mode::Read => "MODE: READ | Press q to save and quit",
+                Mode::Write => "MODE: WRITE | Press esc to return to READ mode"
+            }
+        )
+    }
+}
+
 
 pub struct Editor {
     pub text: Vec<String>,
@@ -34,7 +47,7 @@ impl Editor {
     }
 
     fn display(&mut self) {
-        let term_width = termion::terminal_size().unwrap().0;
+        let (term_width, term_height) = termion::terminal_size().unwrap();
         let mut rows_before = 0;
         for line in self.text.iter().take(self.cursor_pos.1 as usize) {
             rows_before += line.len() as u16 / term_width;
@@ -46,10 +59,12 @@ impl Editor {
         let cursor_col = self.cursor_pos.0 % term_width;
         write!(
             self.stdout,
-            "{}{}{}{}",
+            "{}{}{}{}{}{}",
             termion::cursor::Goto(1, 1),
             termion::clear::All,
             self.text.join("\n\r"),
+            termion::cursor::Goto(0, term_height),
+            self.state,
             termion::cursor::Goto(cursor_col + 1, cursor_row + 1),
         )
         .unwrap();
