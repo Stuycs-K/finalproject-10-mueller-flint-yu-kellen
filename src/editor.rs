@@ -74,7 +74,7 @@ impl Editor {
                     self.cursor_pos.0 = self
                         .cursor_pos
                         .0
-                        .min(self.text[self.cursor_pos.1 as usize].len() as u16 - 1);
+                        .min((self.text[self.cursor_pos.1 as usize].len() as u16).max(1) - 1);
                 }
             }
             Key::Char('j') => {
@@ -83,7 +83,7 @@ impl Editor {
                     self.cursor_pos.0 = self
                         .cursor_pos
                         .0
-                        .min(self.text[self.cursor_pos.1 as usize].len() as u16 - 1);
+                        .min((self.text[self.cursor_pos.1 as usize].len() as u16).max(1) - 1);
                 }
             }
             Key::Char('i') => {
@@ -111,6 +111,19 @@ impl Editor {
             Key::Char(c @ ('0'..='9' | 'a'..='f' | 'A'..='F' | ' ')) => {
                 self.text[self.cursor_pos.1 as usize].insert(self.cursor_pos.0 as usize, c);
                 self.cursor_pos.0 += 1;
+            }
+            Key::Backspace => {
+                if self.cursor_pos.0 > 0 {
+                    self.text[self.cursor_pos.1 as usize].remove(self.cursor_pos.0 as usize - 1);
+                    self.cursor_pos.0 -= 1;
+                } else if self.cursor_pos.1 > 0 {
+                    let prev_line_len = self.text[self.cursor_pos.1 as usize - 1].len() as u16;
+                    self.cursor_pos.0 = prev_line_len - 1;
+                    let removed_line = self.text.remove(self.cursor_pos.1 as usize);
+                    self.text[self.cursor_pos.1 as usize - 1].pop();
+                    self.text[self.cursor_pos.1 as usize - 1].push_str(&removed_line);
+                    self.cursor_pos.1 -= 1;
+                }
             }
             Key::Ctrl('c') => return false,
             _ => {}
