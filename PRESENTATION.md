@@ -12,5 +12,12 @@ Typically terminal input is first processed by the OS (Things like CTRL-C, arrow
 We use a rust package called termion, which simplifies handling raw-mode input and writing to the terminal.
 
 ## How to use
+### Prerequisites
+Make sure to install the latest version of cargo: [download link](https://www.rust-lang.org/tools/install). You can install cargo locally without needing sudo permissions.
+
+### Running the program
+To actually run the program, use the makefile:
+```make run ARGS=<filename>```
+Once you run this, the hex contents of the file will be displayed on the screen.
 Inspired by Vim, our editor has 2 states: read, write. The user starts out in read mode, and can use the hjkl characters to move the cursor around. By pressing q, users can exit the program, which automatically saves whatever edits were made to the file.
 By pressing i, users can enter write mode. In this mode, users can type in hex. By pressing the escape key, users can return to read mode.
