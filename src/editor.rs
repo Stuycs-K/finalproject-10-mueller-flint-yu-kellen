@@ -18,9 +18,9 @@ pub struct Editor {
 }
 
 impl Editor {
-    pub fn new(text: String) -> Self {
+    pub fn new(text: Vec<String>) -> Self {
         Editor {
-            text: vec![text],
+            text,
             state: Mode::Read,
             cursor_pos: (0, 0),
             stdin: termion::async_stdin(),
